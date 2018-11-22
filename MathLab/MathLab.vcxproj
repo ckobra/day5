@@ -160,9 +160,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="blocks.h" />
+    <ClInclude Include="block_sequence.h" />
+    <ClInclude Include="factory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="blocks.cpp" />
+    <ClCompile Include="block_sequence.cpp" />
+    <ClCompile Include="factory.cpp" />
     <ClCompile Include="MathLab.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

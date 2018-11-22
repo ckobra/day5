@@ -21,12 +21,30 @@
     <ClInclude Include="..\MathLab\blocks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\MathLab\factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MathLab\block_sequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\MathLab\blocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="blockTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="factoryTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathLab\factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MathLab\block_sequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="block_sequenceTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
