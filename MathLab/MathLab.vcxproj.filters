@@ -24,6 +24,9 @@
     <ClInclude Include="block_sequence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tuple_serialization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MathLab.cpp">

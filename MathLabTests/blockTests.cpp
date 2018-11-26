@@ -78,16 +78,16 @@ namespace MathLabTests
       auto identity = mathlab::identity();
       std::ostringstream output_stream;
       output_stream << identity;
-      Assert::AreEqual(std::string("identity\n"), output_stream.str());
+      Assert::AreEqual(std::string(""), output_stream.str());
     }
 
     TEST_METHOD(block_with_one_constant)
     {
       std::istringstream input("123.45");
-      auto multiplication = mathlab::multiplication(input);
+      auto block = mathlab::addition::create_from_stream(input);
       std::ostringstream output_stream;
-      output_stream << multiplication;
-      Assert::AreEqual(std::string("multiplication 123.45\n"), output_stream.str());
+      output_stream << *block;
+      Assert::AreEqual(std::string("123.45 "), output_stream.str());
     }
 
     TEST_METHOD(block_with_one_constant_throws_if_no_input)
@@ -95,16 +95,7 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("");
-        auto dummy = mathlab::multiplication(input);
-      });
-    }
-
-    TEST_METHOD(block_with_one_constant_throws_if_too_much_input)
-    {
-      Assert::ExpectException<std::invalid_argument>([]()
-      {
-        std::istringstream input("123. 456.");
-        auto dummy = mathlab::multiplication(input);
+        mathlab::multiplication::create_from_stream(input);
       });
     }
 
@@ -113,17 +104,17 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("Hello");
-        auto dummy = mathlab::multiplication(input);
+        mathlab::multiplication::create_from_stream(input);
       });
     }
 
     TEST_METHOD(block_with_two_constants)
     {
       std::istringstream input("-123.45 666.66");
-      auto limit = mathlab::limit(input);
+      auto limit = mathlab::limit::create_from_stream(input);
       std::ostringstream output_stream;
-      output_stream << limit;
-      Assert::AreEqual(std::string("limit -123.45 666.66\n"), output_stream.str());
+      output_stream << *limit;
+      Assert::AreEqual(std::string("-123.45 666.66 "), output_stream.str());
     }
 
     TEST_METHOD(block_with_two_constants_throws_if_no_input)
@@ -131,16 +122,7 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("");
-        auto dummy = mathlab::limit(input);
-      });
-    }
-
-    TEST_METHOD(block_with_two_constants_throws_if_too_much_input)
-    {
-      Assert::ExpectException<std::invalid_argument>([]()
-      {
-        std::istringstream input("123. 456. 789.");
-        auto dummy = mathlab::limit(input);
+        mathlab::limit::create_from_stream(input);
       });
     }
 
@@ -149,22 +131,8 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("Hello World");
-        auto dummy = mathlab::multiplication(input);
+        mathlab::multiplication::create_from_stream(input);
       });
-    }
-  };
-
-  TEST_CLASS(block_serialization)
-  {
-  public:
-    TEST_METHOD(identity_serialization)
-    {
-      /*auto identity = mathlab::identity {};
-      std::ostringstream output;
-      identity.serialize(output);
-      auto str = output.str();
-
-      Assert::AreEqual(3.14, identity.eval(3.14));*/
     }
   };
 }

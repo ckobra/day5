@@ -2,33 +2,31 @@
 
 namespace mathlab
 {
-  void factory::register_block(const std::string& type, fn_type from_stream_creator) {
-    block_types_[type] = from_stream_creator;
+  template <typename TBlock>
+  void factory::register_block(const std::string& type_name) {
+    types_[type_name] = TBlock::create_from_stream;
   }
 
-  std::unique_ptr<block> factory::create(const std::string& type, std::istream& input)
-  {
-    block* pblock = nullptr;
-    const auto found = block_types_.find(type);
-    if (found != block_types_.end())
-      pblock = found->second(input);
-    return std::unique_ptr<block>(pblock); 
+  std::unique_ptr<block> factory::create(const std::string& type_name, std::istream& stream) const {
+    const auto found = types_.find(type_name);
+    if (found != types_.end())
+      return found->second(stream);
+    return std::unique_ptr<block>();
   }
 
-  std::ostream& factory::dump_registered(std::ostream& to_stream)
-  {
-    for (auto pair : block_types_)
+  std::ostream& factory::dump_registered(std::ostream& to_stream) {
+    for (auto pair : types_)
       to_stream << pair.first << ' ';
     return to_stream;
   }
 
-  void register_all_blocks(factory& factory)
-  {
-    factory.register_block(mathlab::identity::my_type, [](std::istream&) {return new mathlab::identity(); });
-    factory.register_block(mathlab::addition::my_type, [](std::istream& input) {return new mathlab::addition(input); });
-    factory.register_block(mathlab::multiplication::my_type, [](std::istream& input) {return new mathlab::multiplication(input); });
-    factory.register_block(mathlab::power::my_type, [](std::istream& input) {return new mathlab::power(input); });
-    factory.register_block(mathlab::condition::my_type, [](std::istream& input) {return new mathlab::condition(input); });
-    factory.register_block(mathlab::limit::my_type, [](std::istream& input) {return new mathlab::limit(input); });
+  void register_all_blocks(factory& factory) {
+    factory.register_block<identity>("identity");
+    factory.register_block<addition>("addition");
+    factory.register_block<multiplication>("multiplication");
+    factory.register_block<power>("power");
+    factory.register_block<condition>("condition");
+    factory.register_block<addition>("addition");
+    factory.register_block<limit>("limit");
   }
 }

@@ -1,5 +1,6 @@
 #include "block_sequence.h"
 #include <numeric>
+#include <sstream>
 
 namespace {
   std::pair<std::string, std::istringstream> extract_type(const std::string& line)
@@ -32,7 +33,7 @@ namespace mathlab {
           // Deliberately empty - handle same as unknown command
         }
         if (block != nullptr)
-          blocks_.emplace_back(std::move(block));
+          blocks_.push_back(std::make_pair(std::move(block_type), std::move(block)));
         else
           invalid_lines += line + "\n";
       }
@@ -47,10 +48,10 @@ namespace mathlab {
 
   std::ostream& block_sequence::dump(std::ostream& to_stream, bool with_line_numbers) const {
     int position = 1;
-    for (auto& block : blocks_) {
+    for (auto& name_with_block : blocks_) {
       if (with_line_numbers)
         to_stream << position++ << ": ";
-      to_stream << *block;
+      to_stream << name_with_block.first << ' ' << *name_with_block.second << std::endl;
     }
     return to_stream;
   }
@@ -60,7 +61,7 @@ namespace mathlab {
       blocks_.cbegin(),
       blocks_.cend(),
       input,
-      [](double val, const std::unique_ptr<block> &block) { return block->eval(val); });
+      [](double val, const std::pair<std::string, std::unique_ptr<block>> &name_with_block) { return name_with_block.second->eval(val); });
   }
 
   void block_sequence::remove_at(unsigned index) {

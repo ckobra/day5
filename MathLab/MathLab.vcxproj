@@ -162,6 +162,7 @@
     <ClInclude Include="blocks.h" />
     <ClInclude Include="block_sequence.h" />
     <ClInclude Include="factory.h" />
+    <ClInclude Include="tuple_serialization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="blocks.cpp" />

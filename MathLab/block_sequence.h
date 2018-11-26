@@ -2,10 +2,11 @@
 #include "factory.h"
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace mathlab {
   class block_sequence {
-    std::vector<std::unique_ptr<block>> blocks_;
+    std::vector<std::pair<std::string, std::unique_ptr<block>>> blocks_;
     factory& factory_;
   public:
     block_sequence(factory& factory);
