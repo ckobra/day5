@@ -84,7 +84,7 @@ namespace MathLabTests
     TEST_METHOD(block_with_one_constant)
     {
       std::istringstream input("123.45");
-      auto block = mathlab::addition::create_from_stream(input);
+      auto block = mathlab::addition::create_from_stream<mathlab::addition>(input);
       std::ostringstream output_stream;
       output_stream << *block;
       Assert::AreEqual(std::string("123.45 "), output_stream.str());
@@ -95,7 +95,7 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("");
-        mathlab::multiplication::create_from_stream(input);
+        mathlab::multiplication::create_from_stream<mathlab::multiplication>(input);
       });
     }
 
@@ -104,14 +104,14 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("Hello");
-        mathlab::multiplication::create_from_stream(input);
+        mathlab::multiplication::create_from_stream<mathlab::multiplication>(input);
       });
     }
 
     TEST_METHOD(block_with_two_constants)
     {
       std::istringstream input("-123.45 666.66");
-      auto limit = mathlab::limit::create_from_stream(input);
+      auto limit = mathlab::limit::create_from_stream<mathlab::limit>(input);
       std::ostringstream output_stream;
       output_stream << *limit;
       Assert::AreEqual(std::string("-123.45 666.66 "), output_stream.str());
@@ -122,7 +122,7 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("");
-        mathlab::limit::create_from_stream(input);
+        mathlab::limit::create_from_stream<mathlab::limit>(input);
       });
     }
 
@@ -131,7 +131,7 @@ namespace MathLabTests
       Assert::ExpectException<std::invalid_argument>([]()
       {
         std::istringstream input("Hello World");
-        mathlab::multiplication::create_from_stream(input);
+        mathlab::multiplication::create_from_stream<mathlab::multiplication>(input);
       });
     }
   };

@@ -16,9 +16,7 @@ namespace mathlab {
     // A space is added after each member
     static void serialize(std::ostream& to, const std::tuple<TArgs...>& from) {
       tuple_serialization<N - 1, TArgs...>::serialize(to, from);
-      const double& x = std::get<N - 1>(from);
-      
-      to << x << ' ';
+      to << std::get<N - 1>(from) << ' ';
     }
 
     // De-serializes first N tuple members from input stream

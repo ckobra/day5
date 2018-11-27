@@ -4,7 +4,7 @@ namespace mathlab
 {
   template <typename TBlock>
   void factory::register_block(const std::string& type_name) {
-    types_[type_name] = TBlock::create_from_stream;
+    types_[type_name] = TBlock::template create_from_stream<TBlock>;
   }
 
   std::unique_ptr<block> factory::create(const std::string& type_name, std::istream& stream) const {
